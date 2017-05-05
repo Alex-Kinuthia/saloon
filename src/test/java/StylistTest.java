@@ -7,33 +7,23 @@ import java.util.Arrays;
 // class stylist test
 public class StylistTest {
 
-  @Before
-  public void setUp() {
-  DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/saloon_test", "collins", "password");
-  }
+  // connectivity with the database
+  @Rule
+    public DatabaseRule database = new DatabaseRule();
 
-  @After
-  public void tearDown() {
-    try(Connection con = DB.sql2o.open()) {
-    String deleteClientsQuery = "DELETE FROM clients *;";
-    String deleteStylistsQuery = "DELETE FROM stylists *;";
-    con.createQuery(deleteClientsQuery).executeUpdate();
-    con.createQuery(deleteStylistsQuery).executeUpdate();
-    }
-  }
 
 // test to return true if stylists descriptions are the same
 @Test
     public void equals_returnsTrueIfDescriptionsAretheSame() {
-      Stylist firstStylist = new Stylist("Caroline");
-      Stylist secondStylist = new Stylist("Caroline");
+      Stylist firstStylist = new Stylist("Gal");
+      Stylist secondStylist = new Stylist("Gal");
       assertTrue(firstStylist.equals(secondStylist));
     }
 
 //test used to check the saved stylists in the database
 @Test
     public void save_savesIntoDatabase_true() {
-      Stylist myStylist = new Stylist("Caroline");
+      Stylist myStylist = new Stylist("Gal");
       myStylist.save();
       assertTrue(Stylist.all().get(0).equals(myStylist));
     }
@@ -42,9 +32,9 @@ public class StylistTest {
 
 @Test
    public void all_returnsAllInstancesOfStylist_true() {
-     Stylist firstStylist = new Stylist("Caroline");
+     Stylist firstStylist = new Stylist("Gal");
      firstStylist.save();
-     Stylist secondStylist = new Stylist("Betty");
+     Stylist secondStylist = new Stylist("Purity");
      secondStylist.save();
      assertEquals(true, Stylist.all().get(0).equals(firstStylist));
      assertEquals(true, Stylist.all().get(1).equals(secondStylist));
@@ -53,7 +43,7 @@ public class StylistTest {
 // test used for assigning id to stylists
 @Test
   public void save_assignsIdToObject() {
-    Stylist myStylist = new Stylist("Caroline");
+    Stylist myStylist = new Stylist("Gal");
     myStylist.save();
     Stylist savedStylist = Stylist.all().get(0);
     assertEquals(myStylist.getId(), savedStylist.getId());
@@ -61,7 +51,7 @@ public class StylistTest {
 
 @Test
  public void getId_stylistsInstantiateWithAnId_1() {
- Stylist testStylist = new Stylist("Caroline");
+ Stylist testStylist = new Stylist("Gal");
  testStylist.save();
  assertTrue(testStylist.getId() > 0);
  }
@@ -69,9 +59,9 @@ public class StylistTest {
 // test used to find and return stylists with the same id
 @Test
   public void find_returnsStylistWithSameId_secondStylist() {
-  Stylist firstStylist = new Stylist("Caroline");
+  Stylist firstStylist = new Stylist("Gal");
   firstStylist.save();
-  Stylist secondStylist = new Stylist("Betty");
+  Stylist secondStylist = new Stylist("Purity");
   secondStylist.save();
   assertEquals(Stylist.find(secondStylist.getId()), secondStylist);
   }
@@ -79,11 +69,11 @@ public class StylistTest {
 // test to retrieve all clients from the database
 @Test
     public void getClients_retrievesALlClientsFromDatabase_clientsList() {
-      Stylist myStylist = new Stylist("Caroline");
+      Stylist myStylist = new Stylist("Gal");
       myStylist.save();
-      Client firstClient = new Client("June", myStylist.getId());
+      Client firstClient = new Client("Judy", myStylist.getId());
       firstClient.save();
-      Client secondClient = new Client("Jane", myStylist.getId());
+      Client secondClient = new Client("Mercy", myStylist.getId());
       secondClient.save();
       Client[] clients = new Client[] { firstClient, secondClient };
       assertTrue(myStylist.getClients().containsAll(Arrays.asList(clients)));

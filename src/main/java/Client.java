@@ -10,12 +10,14 @@ public class Client {
   private boolean completed;
   private LocalDateTime createdAt;
   private int id;
+  private int stylistId;
 
 // constructor client
-  public Client(String description) {
+  public Client(String description, int stylistId) {
     this.description = description;
     completed = true;
     createdAt = LocalDateTime.now();
+    this.stylistId = stylistId;
   }
 
 //to get description of the client
@@ -38,6 +40,10 @@ public class Client {
       return id;
     }
 
+    public int getStylistId() {
+      return stylistId;
+    }
+
 // to enhance the id is found and used within the class
     public static Client find(int id) {
       try(Connection con = DB.sql2o.open()) {
@@ -51,7 +57,7 @@ public class Client {
 
 // list to hold the clients details and be connected and stored to the database
     public static List<Client> all() {
-      String sql = "SELECT id, description FROM clients";
+      String sql = "SELECT id, description, stylistId  FROM clients";
       try(Connection con = DB.sql2o.open()) {
         return con.createQuery(sql).executeAndFetch(Client.class);
       }
@@ -65,18 +71,40 @@ public class Client {
       } else {
         Client newClient = (Client) otherClient;
         return this.getDescription().equals(newClient.getDescription()) &&
-             this.getId() == newClient.getId();
+             this.getId() == newClient.getId() &&
+             this.getStylistId() == newClient.getStylistId();
       }
     }
 
 // save method for storing our client data
     public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO clients (description) VALUES (:description)";
+      String sql = "INSERT INTO clients (description, stylistId) VALUES (:description, :stylistId)";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("description", this.description)
+        .addParameter("stylistId", this.stylistId)
         .executeUpdate()
         .getKey();
     }
   }
+
+//updating  methods
+    public void update(String description) {
+      try(Connection con = DB.sql2o.open()) {
+        String sql = "UPDATE clients SET description = :description WHERE id = :id";
+        con.createQuery(sql)
+        .addParameter("description", description)
+        .addParameter("id", id)
+        .executeUpdate();
+      }
+    }
+// deleting  methods
+    public void delete() {
+      try(Connection con = DB.sql2o.open()) {
+        String sql = "DELETE FROM clients WHERE id = :id;";
+        con.createQuery(sql)
+        .addParameter("id", id)
+        .executeUpdate();
+      }
+    }
 }

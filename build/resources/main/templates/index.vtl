@@ -1,26 +1,40 @@
 <h1>Bienvenue peeps!</h1>
 
-<h1>View and add your stylists</h1>
-<a href="/stylists/new">Add a new stylist</a><br>
-<div class = "ratings">
-<a href="/stylists">View all current stylists</a>
-<p>Please rate your stylist</p>
-<div class="container">
-	<div class="row">
-		<h2>Working Heart Ratings for Bootstrap 3 <small>Hover and click on a heart</small></h2>
-	</div>
-    <div class="row lead">
-        <div id="hearts" class="starrr"></div>
-        You gave a rating of <span id="count">0</span> heart(s)
-	</div>
+<h2> All Lists: </h2>
 
-    <div class="row lead">
-        <p>Also you can give a default rating by adding attribute data-rating</p>
-        <div id="hearts-existing" class="starrr" data-rating='4'></div>
-        You gave a rating of <span id="count-existing">4</span> heart(s)
-    </div>
-</div>
-</div>
-<h1>View and add clients</h1>
-<a href="/clients">View Client List</a><br>
-<a href="/clients/new">Add a New Client</a>
+#if($stylists)
+  <p>Click on a stylist to see their clients:</p>
+  <ul>
+    #foreach ($stylist in $stylists)
+      <li><a href="/stylists/$stylist.getId()">$stylist.getDescription()</a></li>
+    #end
+  </ul>
+#else
+  <p>There are no stylists yet!</p>
+#end
+
+<h2>New Stlist:</h2>
+
+<form action="/stylists" method="post">
+  <label for="description">Stylist name</label>
+  <input id="description" name="description" type="text">
+  <button type="submit" class="btn btn-success">Add Stylist</button>
+</form>
+
+<h2>New Client:</h2>
+
+<form action="/clients" method="post">
+<label for="stylistId">Select a List</label>
+<select id='stylistId' name='stylistId' type='text'>
+#foreach($stylist in $stylists)
+  <option value="$stylist.getId()">$stylist.getDescription()</option>
+#end
+</select>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input id="description" name="description" type="text" class="form-control">
+  </div>
+
+  <button type="submit" class="btn btn-success">Add Client</button>
+</form>

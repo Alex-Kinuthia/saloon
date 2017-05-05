@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ClientTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2017-05-05T10:57:28" hostname="alex-Lenovo-ideapad-110-15IBR" time="1.761">
+<testsuite name="ClientTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2017-05-05T15:45:34" hostname="alex-Lenovo-ideapad-110-15IBR" time="1.769">
   <properties/>
-  <testcase name="equals_returnsTrueIfDescriptionsAretheSame" classname="ClientTest" time="1.026"/>
-  <testcase name="save_returnsTrueIfDescriptionsAretheSame" classname="ClientTest" time="0.33"/>
-  <testcase name="getId_clientInstantiateWithAnID" classname="ClientTest" time="0.049"/>
-  <testcase name="all_returnsAllInstancesOfClient_true" classname="ClientTest" time="0.136"/>
-  <testcase name="save_assignsIdToObject" classname="ClientTest" time="0.081"/>
-  <testcase name="find_returnsClientWithSameId_secondClient" classname="ClientTest" time="0.136"/>
+  <testcase name="equals_returnsTrueIfDescriptionsAretheSame" classname="ClientTest" time="0.697"/>
+  <testcase name="save_returnsTrueIfDescriptionsAretheSame" classname="ClientTest" time="0.288"/>
+  <testcase name="save_savesStylistIdIntoDB_true" classname="ClientTest" time="0.163"/>
+  <testcase name="getId_clientInstantiateWithAnID" classname="ClientTest" time="0.054"/>
+  <testcase name="all_returnsAllInstancesOfClient_true" classname="ClientTest" time="0.124"/>
+  <testcase name="save_assignsIdToObject" classname="ClientTest" time="0.088"/>
+  <testcase name="delete_deletesClient_true" classname="ClientTest" time="0.096"/>
+  <testcase name="find_returnsClientWithSameId_secondClient" classname="ClientTest" time="0.133"/>
+  <testcase name="update_updatesClientDescription_true" classname="ClientTest" time="0.109"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
