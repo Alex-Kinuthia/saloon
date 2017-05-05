@@ -1,0 +1,18 @@
+<h1>Here are your stylists!</h1>
+#if ($stylists)
+<ul>
+  #foreach ($stylist in $stylists)
+<li>
+<p>Your stylist:</p>
+<p>Name: $stylist.getName()</p><br>
+<p>Age: $stylist.getAge()</p><br>
+<p>Details: $stylist.getDetails()</p><br>
+<p>$stylist.getCreatedAt()</p>
+</li>
+  #end
+</ul>
+#else
+<p>Help us to build and enlarge your stylists!</p>
+#end
+
+<a href="/stylists/new">Add a new stylist</a>
